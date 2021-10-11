@@ -1,18 +1,22 @@
-#include <iostream>
-#include <ctime>
-#include <malloc.h>
-#include <conio.h>
+#include"stdafx.h"
+#include<iostream>
+#include<ctime>
+#include<malloc.h>
+#include<conio.h>
 
-using namespace std;
 
-int* vis = NULL, n, ** p = NULL;
+usingnamespace std;
 
-void DFS(int num) {
-	
-	cout << num << " ";
-	vis[num] = 1;
-	for (int i = 0; i < n; i++) {
-		if (p[num][i] == 0 && vis[i] == 0) {
+int* vis = NULL, n, ** p = NULL, ** x = NULL;
+intpogr = 1, pogrx = 0;
+
+
+void DFS(intnum) {
+
+	cout<<num + 1 <<" "; // Ð²Ñ‹Ð²Ð¾Ð´ Ð²ÐµÑ€ÑˆÐ¸Ð½
+	vis[num] = 1;//Ð²ÐµÑ€ÑˆÐ¸Ð½Ð° Ð¿Ñ€Ð¾Ð¹Ð´ÐµÐ½Ð°
+	for (inti = 0; i<=n; i++) {
+		if(p[num][i] == 1 &&vis[i] == 0) { // Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð½Ð° Ð¿Ð¾ÑÐµÑ‰ÐµÐ½Ð¸Ðµ Ñ€Ð°Ð½ÐµÐµ
 			DFS(i);
 		}
 	}
@@ -21,35 +25,58 @@ void DFS(int num) {
 int main() {
 
 	setlocale(LC_ALL, "Rus");
-	srand(time(0)); //ïî-íàñòîÿùåìó ñëó÷àéíàÿ ãåíåðàöèÿ ìàññèâà
+	srand(time(0)); //Ð¿Ð¾-Ð½Ð°ÑÑ‚Ð¾ÑÑ‰ÐµÐ¼Ñƒ ÑÐ»ÑƒÑ‡Ð°Ð¹Ð½Ð°Ñ Ð³ÐµÐ½ÐµÑ€Ð°Ñ†Ð¸Ñ Ð¼Ð°ÑÑÐ¸Ð²Ð°
+	cout<<"ÐŸÑƒÐ½ÐºÑ‚Ñ‹ 1, 2:\n";
+	cout<<"Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ€Ð°Ð·Ð¼ÐµÑ€ Ð¼Ð°Ñ‚Ñ€Ð¸Ñ†Ñ‹: ";
+	cin>>n;
+	cout<<"ÐœÐ°ÑÑÐ¸Ð²: \n";
 
-	cout << "Ââåäèòå ðàçìåð ìàòðèöû: ";
-	cin >> n;
-	cout << "Ìàññèâ: \n";
 	vis = (int*)calloc(n, 3);
 	p = (int**)calloc(n, 3);
-	for (int i = 0; i < n; i++) {
+	x = (int**)calloc(n, 3);
+
+	for (inti = 0; i< n; i++) {
 		p[i] = (int*)calloc(n, 3);
+		x[i] = (int*)calloc(n, 3);
+		x[i][0] = i + 1;
 	}
 	cout.precision(3 * n);
 
-	for (int i = 0; i < n; i++) {
-		for (int m = 0; m < n; m++) {
+	for (inti = 0; i< n; i++) {
+		for (int m = 0+pogrx; m < n; m++) {
 			p[i][m] = 0 + rand() % 2;
+			p[m][i] = p[i][m];
 			p[i][i] = 0;
-			cout << p[i][m] << " ";
 		}
-
-		cout << endl;
-		
+		pogrx++;
 	}
 
-	cout << "Âåðøèíû: " << endl;
+	for (inti = 0; i< n; i++) {
+		for (int m = 0; m < n; m++) {
+			if (p[i][m] == 1 &&i!=m) { x[i][pogr] = m + 1; pogr++; }
+			else { x[i][pogr] = 0; pogr++; }
+			cout<< p[i][m] <<" ";
+		}
+		pogr = 1;
+		cout<<endl;
+	}
+
+	cout<<"Ð’ÐµÑ€ÑˆÐ¸Ð½Ñ‹: "<<endl;
 
 	DFS(0);
+	DFS(n-1);
+
+
+	cout<<"\n\nÐŸÑƒÐ½ÐºÑ‚ 3:\n";
+
+
+	for (inti = 0; i< n; i++) {
+		for (int m = 0; m <= n; m++) {
+			if (x[i][m]!=0){cout<< x[i][m] <<" ";}
+			
+		}
+		cout<<endl;
+	}
 
 	return 0;
 }
-
-
-
